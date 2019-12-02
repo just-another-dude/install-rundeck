@@ -1,0 +1,19 @@
+---
+- name: Install and enable the rundeck repo.
+  yum_repository:
+    name: rundeck
+    baseurl: http://repo.rundeck.org/latest.rpm
+
+- name: Install the relevant packages.
+  yum:
+    name:  "{{ item }}"
+  with_items:
+    - rundeck
+    - java
+    state: present
+
+- name: Insert Server Public IP in Rundeck Config (instead of localhost).
+  replace:
+    path: /etc/rundeck/rundeck-config.properties
+    regexp: 'localhost'
+    replace: "{{ public_ip }}"
