@@ -17,3 +17,9 @@
     path: /etc/rundeck/rundeck-config.properties
     regexp: 'localhost'
     replace: "{{ public_ip }}"
+    
+- name: Run service.
+  service:
+    name: rundeckd
+    state: started
+    enabled: yes
